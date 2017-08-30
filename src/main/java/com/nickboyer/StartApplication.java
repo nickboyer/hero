@@ -24,6 +24,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class StartApplication {
 
+	/**
+	 * 程序入口
+	 * 
+	 * @param args
+	 *
+	 * @authz Kang.Y
+	 * @createtime 2017年8月30日 上午10:07:43
+	 */
 	public static void main(String[] args) {
 
 		SpringApplication.run(StartApplication.class, args);
