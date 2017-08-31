@@ -15,6 +15,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +62,10 @@ public class LoginController extends BaseController {
 
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
-
+		// shiro加入身份验证
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+		subject.login(token);
 		logger.info("登录信息：用户名：" + account + ",密码：" + password);
 		mv.setViewName("system/index");
 		return mv;
