@@ -7,7 +7,7 @@
  * 
  * @createtime 2017年8月29日 下午4:58:38
  */
-package com.nickboyer.core.service.impl;
+package com.nickboyer.core.service.citrn.impl;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.nickboyer.core.entry.Citrn;
 import com.nickboyer.core.repository.CitrnMapper;
-import com.nickboyer.core.service.ICitrnService;
+import com.nickboyer.core.service.citrn.ICitrnService;
 
 /**
  * @title

@@ -15,9 +15,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nickboyer.core.controller.BaseController;
 import com.nickboyer.core.entry.Citrn;
-import com.nickboyer.core.service.ICitrnService;
+import com.nickboyer.core.service.citrn.ICitrnService;
+import com.nickboyer.core.service.system.ILoginService;
 
 /**
  * 系统控制器
@@ -40,6 +38,8 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private ICitrnService citrnService;
+	@Autowired
+	private ILoginService loginService;
 
 	/**
 	 * 跳转到登录页面
@@ -51,24 +51,19 @@ public class LoginController extends BaseController {
 	 * @createtime 2017年8月29日 下午2:23:22
 	 */
 	@RequestMapping(value = "/toLogin")
-	public ModelAndView toLogin(ModelAndView mv) {
+	public String toLogin() {
 
-		mv.setViewName("system/login");
-		return mv;
+		return "system/login";
 	}
 
 	@RequestMapping(value = "/login")
-	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
+	@ResponseBody
+	public Object login(HttpServletRequest request) throws Exception {
 
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
-		// shiro加入身份验证
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(account, password);
-		subject.login(token);
-		logger.info("登录信息：用户名：" + account + ",密码：" + password);
-		mv.setViewName("system/index");
-		return mv;
+		return loginService.login(account, password);
+
 	}
 
 	@RequestMapping(value = "/welcome")
