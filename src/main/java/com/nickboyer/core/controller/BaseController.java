@@ -11,7 +11,6 @@ package com.nickboyer.core.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,11 +46,13 @@ public class BaseController {
 			result.setCode(ResultCode.ER9999);
 			result.setMsg(ResultCode.ER9999_MSG);
 		}
-		if (ex instanceof JSONException) {
-			logger.error("{}传输报文格式异常..", new Object[] { requestURI }, ex);
-			result.setCode(ResultCode.ER9998);
-			result.setMsg(ResultCode.ER9998_MSG);
-		} else if (ex instanceof NullPointerException) {
+		// if (ex instanceof JSONException) {
+		// logger.error("{}传输报文格式异常..", new Object[] { requestURI }, ex);
+		// result.setCode(ResultCode.ER9998);
+		// result.setMsg(ResultCode.ER9998_MSG);
+		// }
+		// else
+		if (ex instanceof NullPointerException) {
 			logger.error("{}传输报文参数空指针异常..", new Object[] { requestURI }, ex);
 			result.setCode(ResultCode.ER9998);
 			result.setMsg(ResultCode.ER9998_MSG);

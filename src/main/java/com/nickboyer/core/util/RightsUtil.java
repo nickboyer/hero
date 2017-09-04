@@ -11,6 +11,9 @@ package com.nickboyer.core.util;
 
 import java.math.BigInteger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 权限工具类
  * 
@@ -19,6 +22,8 @@ import java.math.BigInteger;
  * @since JDK1.8
  */
 public class RightsUtil {
+
+	private static final Logger logger = LoggerFactory.getLogger(RightsUtil.class);
 
 	/**
 	 * 计算权限
@@ -75,6 +80,8 @@ public class RightsUtil {
 			return sum.testBit(rights);
 
 		} catch (Exception e) {
+
+			logger.error("权限校验异常", e);
 			return false;
 		}
 	}
@@ -96,6 +103,7 @@ public class RightsUtil {
 			return new BigInteger(sum).testBit(Integer.valueOf(rights));
 		} catch (Exception e) {
 
+			logger.error("权限校验异常", e);
 			return false;
 		}
 	}

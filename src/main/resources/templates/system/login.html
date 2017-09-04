@@ -10,34 +10,41 @@
 <body style="text-align: center">
 	<div class="layui-container">
 		<div class="layui-row">
-			<div class="layui-col-md4 layui-col-xs12 layui-col-sm6 layui-col-sm-offset3 layui-col-md-offset4" style="margin-top: 25%;">
+			<div
+				class="layui-col-md4 layui-col-xs12 layui-col-sm6 layui-col-sm-offset3 layui-col-md-offset4"
+				style="margin-top: 25%;">
 				<div class="login-box">
-					<form id="userForm" class="layui-form layui-form-pane" method="get" action="login">
+					<form id="userForm" class="layui-form layui-form-pane" method="get"
+						action="login">
 						<div class="layui-form-item">
-								<p style="font-size: 20px;">后台登录系统</p>
-							</div>
+							<p style="font-size: 20px;" id="home">后台登录系统</p>
+						</div>
 						<div class="layui-form-item">
-								<label class="layui-form-label" style="width: 27%;">账号：</label>
+							<label class="layui-form-label" style="width: 27%;">账号：</label>
 
-							<div class="layui-input-inline"  style="width: 67%;">
-								<input type="text" name="account" class="layui-input" lay-verify="account" placeholder="账号" autocomplete="on" maxlength="20" />
+							<div class="layui-input-inline" style="width: 67%;">
+								<input type="text" id="account" class="layui-input" lay-verify="account" placeholder="账号" autocomplete="on" maxlength="20" />
 							</div>
 						</div>
 						<div class="layui-form-item">
-								<label class="layui-form-label" style="width: 27%;">密码：</label>
+							<label class="layui-form-label" style="width: 27%;">密码：</label>
 
-							<div class="layui-input-inline"  style="width: 67%;">
-								<input type="password" name="password" class="layui-input" lay-verify="password" placeholder="密码" maxlength="20" />
+							<div class="layui-input-inline" style="width: 67%;">
+								<input type="password" id="password" class="layui-input" lay-verify="password" placeholder="密码" maxlength="20" />
 							</div>
 						</div>
-						<!-- <div class="layui-form-item">
-							<label class="layui-form-label">验证码：</label>
-
-							<div class="layui-input-inline">
-								<input type="number" name="code" class="layui-input" lay-verify="code" placeholder="验证码" maxlength="4" />
-								<img src="img/v.png" onclick="getImage()" title="单击刷新验证码" id="img_rand_code" alt=""/>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 27%;">验证码：</label>
+								
+							<div class="layui-input-inline" style="width: 67%;">
+								<div class="layui-col-xs8" style="padding: 0px; margin: 0px;">
+									<input type="text" id="code" class="layui-input" lay-verify="code" placeholder="验证码" maxlength="4"/>
+								</div>
+								<div class="layui-col-xs4" style="padding: 0px; margin: 0px;">
+									<img src="verifyCode.do" onclick="getImage()" title="单击刷新验证码" id="img_rand_code" alt=""/>
+								</div>
 							</div>
-						</div> -->
+						</div>
 						<div class="layui-form-item">
 							<button type="reset" class="layui-btn layui-btn-danger btn-reset">重置</button>
 							<a class="layui-btn" onclick="login();">登录</a>
@@ -50,25 +57,66 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/layui/layui.all.js"></script>
 	<script>
-		 function login(){
-			 
-			 var account = $("#account").val();
-			 var password = $("#password").val();
+		function login() {
+
+			var account = $("#account").val();
+			if (account == '') {
+
+				layer.tips('请输入账号', '#account', {
+					tips : [ 2, '#78BA32' ]
+				});
+				return;
+			}
+			var password = $("#password").val();
+			if (password == '') {
+
+				layer.tips('请输入密码', '#password', {
+					tips : [ 2, '#78BA32' ]
+				});
+				return;
+			}
+			var code = $("#code").val();
+			if(code == ''){
+				
+				layer.tips('请输入验证码', '#img_rand_code', {
+					tips : [ 2, '#78BA32' ]
+				});
+				return;
+			}
 			$.ajax({
-				type: "POST",
-				url: 'login',
-					data: {
-						account:account,
-						password:password,
-						tm:new Date().getTime()
-					},
-				dataType:'json',
-				cache: false,
-				success: function(data){
-					
+				type : "POST",
+				url : 'login_login',
+				data : {
+					'account' : account,
+					'password' : password,
+					'code':code,
+					'tm' : new Date().getTime()
+				},
+				dataType : 'json',
+				cache : false,
+				success : function(data) {
+					if (data.status == '1') {
+
+						layer.tips(data.msg, '#account', {
+							tips : [ 2, '#78BA32' ]
+						});
+					} else if(data.status){
+						layer.tips(data.msg, '#img_rand_code', {
+							tips : [ 2, '#78BA32' ]
+						});
+					} else {
+						layer.tips(data.msg, '#home', {
+							tips : [ 2, '#78BA32' ]
+						});
+					}
 				}
 			});
-		 }
+		}
+		
+		function getImage(){
+			
+			$("#img_rand_code").attr("src", "verifyCode.do?date=" + new Date());
+		}
 	</script>
 </body>
 </html>
