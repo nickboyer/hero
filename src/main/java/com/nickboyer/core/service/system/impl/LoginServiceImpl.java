@@ -46,10 +46,13 @@ public class LoginServiceImpl extends BaseService implements ILoginService {
 	/*
 	 * （非 Javadoc）
 	 * 
-	 * @see com.nickboyer.core.service.system.ILoginService#login(java.lang.String, java.lang.String)
+	 * @see
+	 * com.nickboyer.core.service.system.ILoginService#login(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
-	public Object login(String account, String password, String code, HttpServletResponse response) throws BizException {
+	public Object login(String account, String password, String code, HttpServletResponse response)
+			throws BizException {
 
 		Map<String, Object> returnMap = new HashMap<>();
 
@@ -77,6 +80,8 @@ public class LoginServiceImpl extends BaseService implements ILoginService {
 			UsernamePasswordToken token = new UsernamePasswordToken(account, password);
 			logger.info("登录信息：用户名：" + account + ",密码：" + password);
 			subject.login(token);
+			returnMap.put("status", "0");
+			returnMap.put("msg", "success");
 		}
 		return returnMap;
 	}

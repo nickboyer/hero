@@ -100,10 +100,15 @@
 						layer.tips(data.msg, '#account', {
 							tips : [ 2, '#78BA32' ]
 						});
-					} else if(data.status){
+					} else if(data.status == '2'){
 						layer.tips(data.msg, '#img_rand_code', {
 							tips : [ 2, '#78BA32' ]
 						});
+					} else if (data.status == '0'){
+						layer.tips('正在登录', '#home', {
+							tips : [ 2, '#78BA32' ]
+						});
+						window.location.href='index.do';
 					} else {
 						layer.tips(data.msg, '#home', {
 							tips : [ 2, '#78BA32' ]

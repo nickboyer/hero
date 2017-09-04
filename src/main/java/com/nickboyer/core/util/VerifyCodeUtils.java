@@ -34,13 +34,16 @@ import javax.imageio.ImageIO;
 public class VerifyCodeUtils {
 
 	// 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
-	public static final String VERIFY_CODES = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// public static final String VERIFY_CODES =
+	// "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static final String VERIFY_CODES = "1234567890";
 	private static Random random = new Random();
 
 	/**
 	 * 使用系统默认字符源生成验证码
 	 * 
-	 * @param verifySize 验证码长度
+	 * @param verifySize
+	 *            验证码长度
 	 * @return
 	 */
 	public static String generateVerifyCode(int verifySize) {
@@ -50,8 +53,10 @@ public class VerifyCodeUtils {
 	/**
 	 * 使用指定源生成验证码
 	 * 
-	 * @param verifySize 验证码长度
-	 * @param sources 验证码字符源
+	 * @param verifySize
+	 *            验证码长度
+	 * @param sources
+	 *            验证码字符源
 	 * @return
 	 */
 	public static String generateVerifyCode(int verifySize, String sources) {
@@ -142,7 +147,8 @@ public class VerifyCodeUtils {
 		Graphics2D g2 = image.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		Color[] colors = new Color[5];
-		Color[] colorSpaces = new Color[] { Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.YELLOW };
+		Color[] colorSpaces = new Color[] { Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA,
+				Color.ORANGE, Color.PINK, Color.YELLOW };
 		float[] fractions = new float[colors.length];
 		for (int i = 0; i < colors.length; i++) {
 			colors[i] = colorSpaces[rand.nextInt(colorSpaces.length)];
@@ -187,7 +193,8 @@ public class VerifyCodeUtils {
 		char[] chars = code.toCharArray();
 		for (int i = 0; i < verifySize; i++) {
 			AffineTransform affine = new AffineTransform();
-			affine.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1), (w / verifySize) * i + fontSize / 2, h / 2);
+			affine.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1),
+					(w / verifySize) * i + fontSize / 2, h / 2);
 			g2.setTransform(affine);
 			g2.drawChars(chars, i, 1, ((w - 10) / verifySize) * i + 5, h / 2 + fontSize / 2 - 10);
 		}
@@ -239,7 +246,8 @@ public class VerifyCodeUtils {
 		int phase = random.nextInt(2);
 
 		for (int i = 0; i < h1; i++) {
-			double d = (double) (period >> 1) * Math.sin((double) i / (double) period + (6.2831853071795862D * (double) phase) / (double) frames);
+			double d = (double) (period >> 1)
+					* Math.sin((double) i / (double) period + (6.2831853071795862D * (double) phase) / (double) frames);
 			g.copyArea(0, i, w1, 1, (int) d, 0);
 			if (borderGap) {
 				g.setColor(color);
@@ -258,7 +266,8 @@ public class VerifyCodeUtils {
 		int frames = 20;
 		int phase = 7;
 		for (int i = 0; i < w1; i++) {
-			double d = (double) (period >> 1) * Math.sin((double) i / (double) period + (6.2831853071795862D * (double) phase) / (double) frames);
+			double d = (double) (period >> 1)
+					* Math.sin((double) i / (double) period + (6.2831853071795862D * (double) phase) / (double) frames);
 			g.copyArea(i, 0, 1, h1, 0, (int) d);
 			if (borderGap) {
 				g.setColor(color);

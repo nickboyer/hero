@@ -65,8 +65,10 @@ public class LoginController extends BaseController {
 	/**
 	 * 登录方法
 	 * 
-	 * @param account 账号
-	 * @param password 密码
+	 * @param account
+	 *            账号
+	 * @param password
+	 *            密码
 	 * @return
 	 * @throws Exception
 	 *
@@ -75,7 +77,8 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login_login")
 	@ResponseBody
-	public Object login(@RequestParam("account") String account, @RequestParam("password") String password, @RequestParam("code") String code, HttpServletResponse response) throws Exception {
+	public Object login(@RequestParam("account") String account, @RequestParam("password") String password,
+			@RequestParam("code") String code, HttpServletResponse response) throws Exception {
 
 		return loginService.login(account, password, code, response);
 
@@ -111,7 +114,7 @@ public class LoginController extends BaseController {
 		SecurityUtils.getSubject().getSession().setAttribute(Const.VERIFY_CODE, verifyCode);
 
 		// 写入验证码
-		VerifyCodeUtils.outputImage(85, 37, response.getOutputStream(), verifyCode);
+		VerifyCodeUtils.outputImage(85, 37, response.getOutputStream(), verifyCode.toUpperCase());
 	}
 
 	/**
@@ -127,6 +130,12 @@ public class LoginController extends BaseController {
 	public ModelAndView toWelcome(ModelAndView mv) {
 
 		mv.setViewName("system/welcome");
+		return mv;
+	}
+
+	@RequestMapping(value = "/toUserEdit")
+	public ModelAndView toUserEdit(ModelAndView mv) {
+		mv.setViewName("system/user_edit");
 		return mv;
 	}
 
