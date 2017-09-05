@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nickboyer.core.repository.SysUserMapper" >
   <resultMap id="BaseResultMap" type="com.nickboyer.core.entry.SysUser" >
-    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <id column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="USERNAME" property="username" jdbcType="VARCHAR" />
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="RIGHTS" property="rights" jdbcType="VARCHAR" />
-    <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
     <result column="LAST_LOGIN" property="lastLogin" jdbcType="VARCHAR" />
     <result column="IP" property="ip" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
@@ -98,15 +98,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from sys_user
-    where USER_ID = #{userId,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sys_user
-    where USER_ID = #{userId,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.nickboyer.core.entry.SysUserExample" >
     delete from sys_user
@@ -120,8 +120,8 @@
       LAST_LOGIN, IP, STATUS, 
       BZ, SKIN, EMAIL, NUMBER, 
       PHONE, ORG_CODE)
-    values (#{userId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{rights,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{rights,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
       #{lastLogin,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{bz,jdbcType=VARCHAR}, #{skin,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR})
@@ -177,7 +177,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -192,7 +192,7 @@
         #{rights,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null" >
-        #{roleId,jdbcType=VARCHAR},
+        #{roleId,jdbcType=INTEGER},
       </if>
       <if test="lastLogin != null" >
         #{lastLogin,jdbcType=VARCHAR},
@@ -233,7 +233,7 @@
     update sys_user
     <set >
       <if test="record.userId != null" >
-        USER_ID = #{record.userId,jdbcType=VARCHAR},
+        USER_ID = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.username != null" >
         USERNAME = #{record.username,jdbcType=VARCHAR},
@@ -248,7 +248,7 @@
         RIGHTS = #{record.rights,jdbcType=VARCHAR},
       </if>
       <if test="record.roleId != null" >
-        ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+        ROLE_ID = #{record.roleId,jdbcType=INTEGER},
       </if>
       <if test="record.lastLogin != null" >
         LAST_LOGIN = #{record.lastLogin,jdbcType=VARCHAR},
@@ -284,12 +284,12 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update sys_user
-    set USER_ID = #{record.userId,jdbcType=VARCHAR},
+    set USER_ID = #{record.userId,jdbcType=INTEGER},
       USERNAME = #{record.username,jdbcType=VARCHAR},
       PASSWORD = #{record.password,jdbcType=VARCHAR},
       NAME = #{record.name,jdbcType=VARCHAR},
       RIGHTS = #{record.rights,jdbcType=VARCHAR},
-      ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      ROLE_ID = #{record.roleId,jdbcType=INTEGER},
       LAST_LOGIN = #{record.lastLogin,jdbcType=VARCHAR},
       IP = #{record.ip,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=VARCHAR},
@@ -319,7 +319,7 @@
         RIGHTS = #{rights,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null" >
-        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+        ROLE_ID = #{roleId,jdbcType=INTEGER},
       </if>
       <if test="lastLogin != null" >
         LAST_LOGIN = #{lastLogin,jdbcType=VARCHAR},
@@ -349,7 +349,7 @@
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       </if>
     </set>
-    where USER_ID = #{userId,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.nickboyer.core.entry.SysUser" >
     update sys_user
@@ -357,7 +357,7 @@
       PASSWORD = #{password,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
       RIGHTS = #{rights,jdbcType=VARCHAR},
-      ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=INTEGER},
       LAST_LOGIN = #{lastLogin,jdbcType=VARCHAR},
       IP = #{ip,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=VARCHAR},
@@ -367,6 +367,6 @@
       NUMBER = #{number,jdbcType=VARCHAR},
       PHONE = #{phone,jdbcType=VARCHAR},
       ORG_CODE = #{orgCode,jdbcType=VARCHAR}
-    where USER_ID = #{userId,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

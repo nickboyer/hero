@@ -24,12 +24,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nickboyer.core.biz.BizException;
 import com.nickboyer.core.common.Const;
 import com.nickboyer.core.controller.BaseController;
 import com.nickboyer.core.entry.Citrn;
+import com.nickboyer.core.entry.SysMenu;
+import com.nickboyer.core.entry.SysRole;
 import com.nickboyer.core.entry.SysUser;
 import com.nickboyer.core.service.citrn.ICitrnService;
 import com.nickboyer.core.service.system.ILoginService;
+import com.nickboyer.core.service.system.IMenuService;
+import com.nickboyer.core.service.system.IRoleService;
 import com.nickboyer.core.util.VerifyCodeUtils;
 
 /**
@@ -46,6 +51,10 @@ public class LoginController extends BaseController {
 	private ICitrnService citrnService;
 	@Autowired
 	private ILoginService loginService;
+	@Autowired
+	private IRoleService roleService;
+	@Autowired
+	private IMenuService menuService;
 
 	/**
 	 * 跳转到登录页面
@@ -65,10 +74,8 @@ public class LoginController extends BaseController {
 	/**
 	 * 登录方法
 	 * 
-	 * @param account
-	 *            账号
-	 * @param password
-	 *            密码
+	 * @param account 账号
+	 * @param password 密码
 	 * @return
 	 * @throws Exception
 	 *
@@ -77,8 +84,7 @@ public class LoginController extends BaseController {
 	 */
 	@RequestMapping(value = "/login_login")
 	@ResponseBody
-	public Object login(@RequestParam("account") String account, @RequestParam("password") String password,
-			@RequestParam("code") String code, HttpServletResponse response) throws Exception {
+	public Object login(@RequestParam("account") String account, @RequestParam("password") String password, @RequestParam("code") String code, HttpServletResponse response) throws Exception {
 
 		return loginService.login(account, password, code, response);
 
@@ -93,13 +99,16 @@ public class LoginController extends BaseController {
 	 * @createtime 2017年9月4日 下午1:02:23
 	 */
 	@RequestMapping(value = "/index")
-	public ModelAndView toIndex(ModelAndView mv) {
+	public ModelAndView toIndex(ModelAndView mv) throws BizException {
 
 		// 1.获取登录用户信息
-		mv.addObject("user", (SysUser) SecurityUtils.getSubject().getSession().getAttribute("user"));
+		SysUser user = (SysUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+		mv.addObject("user", user);
 
 		// 2.获取用户菜单信息
-
+		List<SysRole> roles = roleService.getRoles(user.getRoleId());
+		List<SysMenu> menus = menuService.getMenus(roles);
+		mv.addObject("menus", menus);
 		mv.setViewName("system/index");
 		return mv;
 	}

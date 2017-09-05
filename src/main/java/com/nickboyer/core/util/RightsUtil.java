@@ -107,4 +107,9 @@ public class RightsUtil {
 			return false;
 		}
 	}
+
+	public static void main(String[] args) {
+		String sumRights = sumRights(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" });
+		System.out.println(sumRights);
+	}
 }

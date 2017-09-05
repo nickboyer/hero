@@ -1,7 +1,7 @@
 package com.nickboyer.core.entry;
 
 public class SysUser {
-    private String userId;
+    private Integer userId;
 
     private String username;
 
@@ -11,7 +11,7 @@ public class SysUser {
 
     private String rights;
 
-    private String roleId;
+    private Integer roleId;
 
     private String lastLogin;
 
@@ -31,12 +31,12 @@ public class SysUser {
 
     private String orgCode;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -71,12 +71,12 @@ public class SysUser {
         this.rights = rights == null ? null : rights.trim();
     }
 
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public String getLastLogin() {
