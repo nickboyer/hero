@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>富文本编辑器</title>
+		<link rel="stylesheet" href="layui/css/layui.css">
+	</head>
+	<body>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  			<legend>完整功能（没错，目前工具栏只有这么多）</legend>
+		</fieldset>
+ 
+		<textarea class="layui-textarea" id="LAY_demo1" style="display: none">  
+  			把编辑器的初始内容放在这textarea即可
+		</textarea>
+		
+		
+		<script src="layui/layui.js"></script>
+		<script>
+			layui.use('layedit', function(){
+				var layedit = layui.layedit
+  				,$ = layui.jquery;
+  				
+  				//构建一个默认的编辑器
+  				var index = layedit.build('LAY_demo1');
+			});
+		</script>
+	</body>
+</html>
