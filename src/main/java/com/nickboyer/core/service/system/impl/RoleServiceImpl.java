@@ -12,11 +12,14 @@ package com.nickboyer.core.service.system.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nickboyer.core.biz.BizException;
 import com.nickboyer.core.entry.SysRole;
+import com.nickboyer.core.entry.SysRoleExample;
+import com.nickboyer.core.entry.SysRoleExample.Criteria;
 import com.nickboyer.core.repository.SysRoleMapper;
 import com.nickboyer.core.service.base.BaseService;
 import com.nickboyer.core.service.system.IRoleService;
@@ -69,5 +72,29 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 
 			getRoleByParentId(sysRole.getRoleId(), list);
 		}
+	}
+
+	/*
+	 * （非 Javadoc）
+	 * 
+	 * @see com.nickboyer.core.service.system.IRoleService#list(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<SysRole> list(String page, String limit, String roleId, String roleName) throws BizException {
+
+		SysRoleExample example = new SysRoleExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isEmpty(roleId)) {
+
+			criteria.andRoleIdEqualTo(Integer.valueOf(roleId));
+		}
+		if (!StringUtils.isEmpty(roleName)) {
+
+			criteria.andRoleNameEqualTo(roleName);
+		}
+		example.setLimitStart((Integer.valueOf(page) - 1) * Integer.valueOf(limit));
+		example.setLimitEnd(Integer.valueOf(page) * Integer.valueOf(limit));
+		List<SysRole> list = roleMapper.selectByExample(example);
+		return list;
 	}
 }

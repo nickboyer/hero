@@ -1,127 +1,121 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>开始使用Layui</title>
-<link rel="stylesheet" href="/layui/css/layui.css" />
-</head>
-<body style="text-align: center">
-	<div class="layui-container">
-		<div class="layui-row">
-			<div
-				class="layui-col-md4 layui-col-xs12 layui-col-sm6 layui-col-sm-offset3 layui-col-md-offset4"
-				style="margin-top: 25%;">
-				<div class="login-box">
-					<form id="userForm" class="layui-form layui-form-pane" method="get"
-						action="login">
-						<div class="layui-form-item">
-							<p style="font-size: 20px;" id="home">后台登录系统</p>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label" style="width: 27%;">账号：</label>
-
-							<div class="layui-input-inline" style="width: 67%;">
-								<input type="text" id="account" class="layui-input" lay-verify="account" placeholder="账号" autocomplete="on" maxlength="20" />
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label" style="width: 27%;">密码：</label>
-
-							<div class="layui-input-inline" style="width: 67%;">
-								<input type="password" id="password" class="layui-input" lay-verify="password" placeholder="密码" maxlength="20" />
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label" style="width: 27%;">验证码：</label>
-								
-							<div class="layui-input-inline" style="width: 67%;">
-								<div class="layui-col-xs8" style="padding: 0px; margin: 0px;">
-									<input type="text" id="code" class="layui-input" lay-verify="code" placeholder="验证码" maxlength="4"/>
-								</div>
-								<div class="layui-col-xs4" style="padding: 0px; margin: 0px;">
-									<img src="verifyCode.do" onclick="getImage()" title="单击刷新验证码" id="img_rand_code" alt=""/>
-								</div>
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<button type="reset" class="layui-btn layui-btn-danger btn-reset">重置</button>
-							<a class="layui-btn" onclick="login();">登录</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="/js/jquery.min.js"></script>
-	<script src="/layui/layui.all.js"></script>
-	<script>
-		function login() {
-
-			var account = $("#account").val();
-			if (account == '') {
-
-				layer.tips('请输入账号', '#account', {
-					tips : [ 2, '#78BA32' ]
-				});
-				return;
-			}
-			var password = $("#password").val();
-			if (password == '') {
-
-				layer.tips('请输入密码', '#password', {
-					tips : [ 2, '#78BA32' ]
-				});
-				return;
-			}
-			var code = $("#code").val();
-			if(code == ''){
-				
-				layer.tips('请输入验证码', '#img_rand_code', {
-					tips : [ 2, '#78BA32' ]
-				});
-				return;
-			}
-			$.ajax({
-				type : "POST",
-				url : 'login_login',
-				data : {
-					'account' : account,
-					'password' : password,
-					'code':code,
-					'tm' : new Date().getTime()
-				},
-				dataType : 'json',
-				cache : false,
-				success : function(data) {
-					if (data.status == '1') {
-
-						layer.tips(data.msg, '#account', {
-							tips : [ 2, '#78BA32' ]
-						});
-					} else if(data.status == '2'){
-						layer.tips(data.msg, '#img_rand_code', {
-							tips : [ 2, '#78BA32' ]
-						});
-					} else if (data.status == '0'){
-						layer.tips('正在登录', '#home', {
-							tips : [ 2, '#78BA32' ]
-						});
-						window.location.href='index.do';
-					} else {
-						layer.tips(data.msg, '#home', {
-							tips : [ 2, '#78BA32' ]
-						});
-					}
-				}
-			});
-		}
+	<head>
+		<meta charset="UTF-8"/>
+		<title>登陆</title>
+		<link rel="stylesheet" href="layui/css/layui.css"/>
+		<link rel="stylesheet" href="css/style.css"/>
+		<link rel="icon" href="img/favicon.png"/>
+	</head>
+	<body class="login-body body">
 		
-		function getImage(){
-			
-			$("#img_rand_code").attr("src", "verifyCode.do?date=" + new Date());
+<div class="login-box">
+    <form class="layui-form layui-form-pane" method="get" action="">
+        <div class="layui-form-item">
+            <h3>xx后台登录系统</h3>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号：</label>
+
+            <div class="layui-input-inline">
+                <input type="text" id="account" name="account" class="layui-input" lay-verify="account" placeholder="账号" autocomplete="on" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+
+            <div class="layui-input-inline">
+                <input type="password" id="password" name="password" class="layui-input" lay-verify="password" placeholder="密码" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">验证码：</label>
+
+            <div class="layui-input-inline">
+                <input type="number" id="code" name="code" class="layui-input" lay-verify="code" placeholder="验证码" maxlength="4"/><img src="verifyCode.do" onclick="getImage()" title="单击刷新验证码" id="img_rand_code" alt=""/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button type="reset" class="layui-btn layui-btn-danger btn-reset">重置</button>
+            <button type="button" class="layui-btn btn-submit" lay-submit="" lay-filter="sub">立即登录</button>
+        </div>
+    </form>
+</div>	
+<script src="js/jquery.min.js"></script>
+<script src="layui/layui.all.js"></script>
+<script type="text/javascript">
+
+	var form = layui.form;
+	// 提交监听
+	form.on('submit(sub)', function (data) {
+		login();
+	})
+	function login() {
+	
+		var account = $("#account").val();
+		if (account == '') {
+	
+			layer.tips('请输入账号', '#account', {
+				tips : [ 2, '#78BA32' ]
+			});
+			return;
 		}
-	</script>
-</body>
+		var password = $("#password").val();
+		if (password == '') {
+	
+			layer.tips('请输入密码', '#password', {
+				tips : [ 2, '#78BA32' ]
+			});
+			return;
+		}
+		var code = $("#code").val();
+		if(code == ''){
+			
+			layer.tips('请输入验证码', '#img_rand_code', {
+				tips : [ 2, '#78BA32' ]
+			});
+			return;
+		}
+		$.ajax({
+			type : "POST",
+			url : 'login_login',
+			data : {
+				'account' : account,
+				'password' : password,
+				'code':code,
+				'tm' : new Date().getTime()
+			},
+			dataType : 'json',
+			cache : false,
+			success : function(data) {
+				if (data.status == '1') {
+	
+					layer.tips(data.msg, '#account', {
+						tips : [ 2, '#78BA32' ]
+					});
+				} else if(data.status == '2'){
+					layer.tips(data.msg, '#img_rand_code', {
+						tips : [ 2, '#78BA32' ]
+					});
+				} else if (data.status == '0'){
+					layer.tips('正在登录', '#home', {
+						tips : [ 2, '#78BA32' ]
+					});
+					window.location.href='index.do';
+				} else {
+					layer.tips(data.msg, '#home', {
+						tips : [ 2, '#78BA32' ]
+					});
+				}
+			}
+		});
+	}
+	
+	function getImage(){
+		
+		$("#img_rand_code").attr("src", "verifyCode.do?date=" + new Date());
+	}
+
+</script>
+	</body>
 </html>

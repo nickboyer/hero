@@ -32,4 +32,16 @@ public interface IRoleService {
 	 * @createtime 2017年9月5日 下午2:08:36
 	 */
 	List<SysRole> getRoles(int id) throws BizException;
+
+	/**
+	 * @param page
+	 * @param limit
+	 * @param roleId
+	 * @param roleName
+	 * @return
+	 *
+	 * @authz Kang.Y
+	 * @createtime 2017年9月7日 下午5:13:48
+	 */
+	List<SysRole> list(String page, String limit, String roleId, String roleName) throws BizException;
 }
