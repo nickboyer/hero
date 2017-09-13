@@ -58,7 +58,8 @@ public class RoleController {
 		String roleName = request.getParameter("roleName");
 		try {
 			List<SysRole> list = roleService.list(page, limit, roleId, roleName);
-			returnMap.put("count", list.size());
+			int count = roleService.listCount(roleId, roleName);
+			returnMap.put("count", count);
 			returnMap.put("data", list);
 		} catch (BizException e) {
 

@@ -97,4 +97,25 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 		List<SysRole> list = roleMapper.selectByExample(example);
 		return list;
 	}
+
+	/*
+	 * （非 Javadoc）
+	 * 
+	 * @see com.nickboyer.core.service.system.IRoleService#listCount(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public int listCount(String roleId, String roleName) throws BizException {
+		SysRoleExample example = new SysRoleExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isEmpty(roleId)) {
+
+			criteria.andRoleIdEqualTo(Integer.valueOf(roleId));
+		}
+		if (!StringUtils.isEmpty(roleName)) {
+
+			criteria.andRoleNameEqualTo(roleName);
+		}
+		List<SysRole> list = roleMapper.selectByExample(example);
+		return list.size();
+	}
 }
